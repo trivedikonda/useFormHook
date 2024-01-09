@@ -34,7 +34,7 @@ const App=()=>{
         try {
             const response = await fetch(url);
             const data = await response.json();
-            console.log(data);
+            //console.log(data);
             setUserData(data);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -66,7 +66,7 @@ const App=()=>{
       if (response.ok){
         const responseData = await response.json();
 
-        console.log(responseData);
+        //console.log(responseData);
         setUserData((prevState) => [...prevState, responseData]);
 
         control._reset();
@@ -74,11 +74,6 @@ const App=()=>{
         console.log("Error")
         }
       }
-  
-      const displayArray=()=>{
-        console.log(users)
-      }
-      displayArray()
 
       // DELETE METHOD
   const onDeleteUser = (userId) => {
@@ -144,12 +139,35 @@ const App=()=>{
         }
       }
 
-      const onHandleEdit = (id) => {
-        const userToEdit = users.find((user) => user._id === id);
+      
+        const onHandleEdit = (id) => {
+          const userToEdit = users.find((user) => user._id === id);
+          //console.log(userToEdit.firstName);
+          console.log("User to Edit:", userToEdit); // Check userToEdit structure
+        
+          setFormData((prev) => ({
+            ...prev,
+            firstName: userToEdit.firstName,
+            lastName: userToEdit.lastName,
+            mailId: userToEdit.mailId,
+            facebook: userToEdit.facebook,
+            twitter: userToEdit.twitter,
+            phoneNumbers: {
+              primaryContact: userToEdit.phoneNumbers.primaryContact || '',
+              secondaryContact: userToEdit.phoneNumbers.secondaryContact || '',
+            },
+            phNumbers: userToEdit.phNumbers.map((number) => ({ number: number.number })),
+          }));
+        
+          setEditingUserId(id);
+          setIsEditing(true);
+    
+        console.log("FormData after setting:", formData); // Check formData
+      
         setEditingUserId(id);
-        setFormData(userToEdit);
         setIsEditing(true);
       };
+      
     
   return (
    <div>
@@ -216,26 +234,22 @@ const App=()=>{
             <div className="label-input" style={{marginRight:"10px"}}>
             <label htmlFor="primary-phone"><b>Primary Contact</b></label>
             <input
-                      type="number"
-                      className="input"
-                      id="primary-phone"
-                      {...register("phoneNumbers.primaryContact", {
-                          pattern: {
-                            value: /^\d+$/,
-                            message: "Please enter only numbers for the primary contact",
-                          },
-                      })}
-                      onChange={(e) =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            phoneNumbers: {
-                                ...prev.phoneNumbers,
-                                primaryContact: e.target.value,
-                            },
-                          }))
-                      }
-                    />
-                    <p className="err-msg">{errors.phoneNumbers?.primaryContact?.message}</p>
+              type="number"
+              className="input"
+              id="primary-phone"
+              value={formData.phoneNumbers.primaryContact || ""}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  phoneNumbers: {
+                    ...prev.phoneNumbers,
+                    primaryContact: e.target.value,
+                  },
+                }))
+              }
+            />
+
+            <p className="err-msg">{errors.phoneNumbers?.primaryContact?.message}</p>
 
 
             </div>
@@ -246,6 +260,7 @@ const App=()=>{
                 type="number"
                 className="input"
                 id="secondary-phone"
+                value={formData.phoneNumbers.secondaryContact || ''}
                 {...register("phoneNumbers.secondaryContact", {
                     pattern: {
                       value: /^\d+$/,
@@ -270,30 +285,26 @@ const App=()=>{
             <div style={{textAlign:"center"}}>
               <label className='list-of-numbers-heading'>LIST OF CONTACTS</label>
               <div className='items'>
-                {fields.map((field,i) => {
-                  return(
-                  <div key={field.id} style={{marginBottom:"20px"}}>
-                    <input
-                        placeholder="Please enter the phone number"
-                        className="input"
-                        style={{ marginRight: "19px" }}
-                        type="number"
-                        {...register(`phNumbers.${i}.number`, {
-                            pattern: {
-                              value: /^\d+$/,
-                              message: "Please enter only numbers",
-                            },
-                        })}
-                        onChange={(e) =>
-                            setFormData((prev) => ({
-                              ...prev,
-                              phNumbers: {
-                                  ...prev.phNumbers,
-                                  [i]: { number: e.target.value },
-                              },
-                            }))
-                        }
-                      />
+              {fields.map((field, i) => {
+                const phoneNumberValue = formData.phNumbers?.[i]?.number || ''; // Used optional chaining
+              return (
+                <div key={field.id} style={{ marginBottom: "20px" }}>
+                  <input
+                      placeholder="Please enter the phone number"
+                      className="input"
+                      style={{ marginRight: "19px" }}
+                      type="number"
+                      value={phoneNumberValue}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          phNumbers: prev.phNumbers.map((item, index) =>
+                            index === i ? { ...item, number: e.target.value } : item
+                          ),
+                        }))
+                      }
+                    />
+
 
                     {
                       i>0 && (
