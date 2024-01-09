@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: black;
+  }
+  
+  .form-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .label-input{
+    color:white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 13px;
+    
+  }
+  
+  .input{
+    outline: none;
+    height:35px;
+    width:230px;
+    border-radius: 6px;
+    margin-top: 8px;
+  }
+  
+  .app{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    height: 100vh;
+  }
+  
+  .heading{
+    text-align: center;
+    color:rgb(192, 26, 123);
+    font-size: 60px;
+  }
+  
+  button{
+    height:38px;
+    width:120px;
+    border-radius: 8px;
+    border: none;
+    background-color: brown;
+    color:#ffffff;
+    cursor:pointer;
+  }
+  
+  .submit-btn{
+    background-color: brown;
+  }
+  
+  .remove-btn{
+    background-color: rgb(119, 113, 133);
+  }
+  
+  .add-btn{
+    background-color: rgb(248, 158, 173);
+    width:200px;
+  }
+  
+  .err-msg{
+    color:red;
+    font-size:12px;
+  }
+  
+  .button:hover{
+    border: 1px solid rgb(146, 163, 180);
+  }
+  
+  .contacts{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .list-of-numbers-heading{
+    font-family: "Arial, sans-serif";
+    color:aquamarine;
+    text-decoration:underline;
+    font-size: 30px;
+  }
+  
+  .items{
+    padding: 20px;
+    min-height:30px;
+    width:500px;
+    border:1px solid grey;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-bottom:25px;
+    margin-top:25px;
+  }
+
+  .users-heading{
+    font-size: 30px;
+    color: palegoldenrod;
+    text-align: center;
+  }

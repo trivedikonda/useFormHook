@@ -1,0 +1,19 @@
+.list-item{
+    max-width: 100%;
+    list-style-type: none;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid teal;
+    margin-bottom: 8px;
+}
+
+.name{
+    width:180px;
+}
+
+.mail{
+    width:200px;
+}
